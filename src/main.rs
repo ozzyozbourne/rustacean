@@ -1,3 +1,6 @@
+use learn::greet;
+use std::collections::HashSet;
+
 fn main() {
     let (mut bunnies , mut carrots) = (1,2);
     const FOO_BAR:isize = 10;
@@ -6,6 +9,15 @@ fn main() {
         println!("{}   {}",bunnies, FOO_BAR );
     }
      println!("{}    {}",bunnies, FOO_BAR );
+     greet();
+     three_sum(vec![-1,0,1,2,-1,-4])
+         .iter()
+         .for_each(|inner_vec|{
+            print!("[ "); 
+            inner_vec.iter().for_each(|&value| print!("{} ", value));
+            print!("]\n");
+         });
+
 }
 
 
@@ -20,4 +32,26 @@ fn main() {
         }
         l == a1.len()
     }
+
+pub fn three_sum(mut nums: Vec<i32>) ->Vec<Vec<i32>> {
+    if nums.len() < 3 {return vec![]}
+    nums.sort();
+    let mut set = HashSet::new();
+
+    for i in 0..nums.len() {
+        let (mut j, mut k) = (i+1, nums.len()-1);
+        while j < k {
+            match nums[i] + nums[j] + nums[k]{
+                s if s > 0 => k-=1,
+                s if s < 0 => j+=1,
+                _  => {
+                    set.insert((nums[i], nums[j], nums[k]));
+                    j+=1;
+                    while nums[j] == nums[j-1] && j < k{j+=1;}
+                }
+            }
+        }
+    }
+    set.iter().map(|i| vec![i.0, i.1, i.2]).collect()
+}
 
