@@ -55,3 +55,24 @@ pub fn three_sum(mut nums: Vec<i32>) ->Vec<Vec<i32>> {
     set.iter().map(|i| vec![i.0, i.1, i.2]).collect()
 }
 
+
+pub fn three_sum_optimal(mut nums:Vec<i32>)-> Vec<Vec<i32>> {
+    nums.sort();
+    let mut res:Vec<Vec<i32>> = vec![];
+
+    for i in 0..nums.len(){
+        let (mut j, mut k) = (i+1, nums.len()-1);
+        while j < k {
+            match nums[i] + nums[j] + nums[k] {
+                s if s < 0 => j+=1,
+                s if s > 0 => k-=1,
+                _ => {
+                    res.push(vec![nums[i], nums[j], nums[k]]);
+                    j+=1;
+                    while nums[j] == nums[j-1] && j < k {j+=1;}
+                }
+            }
+        }
+    }
+    res
+}
