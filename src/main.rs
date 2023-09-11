@@ -1,5 +1,6 @@
 use learn::greet;
 use std::collections::HashSet;
+use std::collections::HashMap;
 
 fn main() {
     let (mut bunnies , mut carrots) = (1,2);
@@ -21,17 +22,17 @@ fn main() {
 }
 
 
-    pub fn is_subsequence(s: String, t: String) -> bool {
-        let (a1, a2):(Vec<char>, Vec<char>) = (s.chars().collect(), t.chars().collect());
-        let (mut l, mut r) = (0, 0);
-        while l < a1.len() && r < a2.len() {
-            if a1[l] == a2[r] {
-                l+=1;
-            }
-            r+=1;
+pub fn is_subsequence(s: String, t: String) -> bool {
+    let (a1, a2):(Vec<char>, Vec<char>) = (s.chars().collect(), t.chars().collect());
+    let (mut l, mut r) = (0, 0);
+    while l < a1.len() && r < a2.len() {
+        if a1[l] == a2[r] {
+            l+=1;
         }
-        l == a1.len()
+        r+=1;
     }
+    l == a1.len()
+}
 
 pub fn three_sum(mut nums: Vec<i32>) ->Vec<Vec<i32>> {
     if nums.len() < 3 {return vec![]}
@@ -76,4 +77,8 @@ pub fn three_sum_optimal(mut nums:Vec<i32>)-> Vec<Vec<i32>> {
         }
     }
     res
+}
+
+pub fn two_sum(nums:Vec<i32>, target:i32) -> Vec<i32> {
+    
 }
