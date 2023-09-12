@@ -79,6 +79,14 @@ pub fn three_sum_optimal(mut nums:Vec<i32>)-> Vec<Vec<i32>> {
     res
 }
 
-pub fn two_sum(nums:Vec<i32>, target:i32) -> Vec<i32> {
-    
+pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        let mut vec:Vec<i32> = vec![];
+        let mut map:HashMap<i32, i32> = HashMap::new();
+        for (index, value) in nums.iter().enumerate() {
+            match map.get(&value) {
+                Some(&index_2) =>{vec.append(&mut vec![index as i32, index_2]);}
+                None => {map.insert(target - value, index as i32);}
+            }
+        }
+        vec
 }
