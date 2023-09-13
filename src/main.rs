@@ -21,6 +21,17 @@ fn main() {
 
 }
 
+pub fn two_sum_two(nums:Vec<i32>, target:i32) -> Vec<i32> {
+    let (mut left, mut right) = (0, nums.len()-1);
+    while left < right {
+        match nums[left] + nums[right] {
+            s if s < target => left+=1,
+            s if s > target => right-=1,
+            _  => {left+=1; right+=1; break;}        
+        }
+    }
+    vec![left as i32, right as i32]
+}
 
 pub fn is_subsequence(s: String, t: String) -> bool {
     let (a1, a2):(Vec<char>, Vec<char>) = (s.chars().collect(), t.chars().collect());
