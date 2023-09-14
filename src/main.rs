@@ -101,3 +101,38 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         }
         vec
 }
+
+pub fn four_sum(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+    if nums.len() < 4 {return vec![];}    
+    nums.sort();
+    let (mut res, mut quad):(Vec<Vec<i32>>, Vec<i32>) = (vec![], vec![]);
+    
+    fn ksum(k:usize, start:usize, target:i64, nums:&mut Vec<i64>, res:&mut Vec<Vec<i32>>, quad:&mut Vec<i32>) {
+       if k > 2 {
+           for i in start..nums.len()-k+1 {
+                if i > start && nums[i] == nums[i-1]{continue;}
+                quad.push(nums[i] as i32);
+                ksum(k-1, i+1, target-nums[i], nums,res, quad);
+                quad.pop();
+           }
+       }else {
+            let (mut l, mut r):(usize, usize) = (start, nums.len()-1);
+            while l < r {
+                match nums[l] + nums[r] {
+                    s if s < target => l+=1,
+                    s if s > target => r-=1,
+                    _ => {
+                        res.push(quad.clone().into_iter().chain(vec![nums[l] as i32, nums[r] as i32]).collect());
+                        l+=1;
+                        while l < r && nums[l] == nums[l-1] {l+=1;}
+                    }
+                }
+            }
+       } 
+    }
+    ksum(4, 0, target as i64, &mut nums.into_iter().map(|x| x as i64).collect(), &mut res, &mut quad);
+    res
+}
+
+
+
