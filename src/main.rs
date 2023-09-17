@@ -135,4 +135,32 @@ pub fn four_sum(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
 }
 
 
-
+pub fn four_sum_new(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+    if nums.len() < 4 {return vec![];}    
+    nums.sort();
+    
+    fn ksum(k:usize, start:usize, target:i64, nums:&mut Vec<i32>, mut res:Vec<Vec<i32>>, quad:&mut [i32; 2]) -> Vec<Vec<i32>> {
+       if k > 2 {
+           for i in start..nums.len()-k+1 {
+                if i > start && nums[i] == nums[i-1]{continue;}
+                quad[4-k] = nums[i] as i32;
+                res = ksum(k-1, i+1, target - nums[i] as i64, nums,res, quad);
+           }
+       }else {
+            let (mut l, mut r):(usize, usize) = (start, nums.len()-1);
+            while l < r {
+                match nums[l] as i64 + nums[r] as i64 {
+                    s if s < target => l+=1,
+                    s if s > target => r-=1,
+                    _ => {
+                        res.push(vec![quad[0], quad[1], nums[l] as i32, nums[r] as i32]);
+                        l+=1;
+                        while l < r && nums[l] == nums[l-1] {l+=1;}
+                    }
+                }
+            }
+       }
+       res
+    }
+    ksum(4, 0, target as i64, &mut nums, vec![], &mut [0, 0])
+}
