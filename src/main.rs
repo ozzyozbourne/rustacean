@@ -1,6 +1,7 @@
 use learn::greet;
 use std::collections::HashSet;
 use std::collections::HashMap;
+use std::vec;
 
 fn main() {
     let (mut bunnies , mut carrots) = (1,2);
@@ -18,6 +19,32 @@ fn main() {
             inner_vec.iter().for_each(|&value| print!("{} ", value));
             print!("]\n");
          });
+    rotate(&mut vec![-1], 2);
+
+    let mut d2: Vec<Vec<i32>> = vec![];
+    let arr:Vec<i32> = vec![1,2,3];
+
+    generate_all(&mut d2, &mut vec![], 0, &arr);
+    
+    for (_,i) in d2.iter().enumerate(){
+        for(_,j ) in i.iter().enumerate(){
+            print!("{} ", j);
+        }println!();
+    } 
+
+}
+
+fn generate_all(d2: &mut Vec<Vec<i32>>, d1: &mut Vec<i32>, i: usize, arr: &Vec<i32>) {
+    
+    if i == arr.len() {
+        d2.push(d1.clone());  
+        return; 
+    }
+
+    d1.push(arr[i]);
+    generate_all(d2, d1, i+1, arr);
+    _ = d1.pop();
+    generate_all(d2, d1, i+1, arr);
 
 }
 
@@ -163,4 +190,40 @@ pub fn four_sum_new(mut nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
        res
     }
     ksum(4, 0, target as i64, &mut nums, vec![], &mut [0, 0])
+}
+
+pub fn check(nums: Vec<i32>) -> bool {
+        let mut count = 0;
+        for (i, v) in nums.iter().enumerate() {
+            if v > &nums[(i+1) % nums.len()]{count += 1;}
+            if count > 1{return false;}
+        }
+        true
+}
+
+pub fn find_max_consecutive_ones(nums: Vec<i32>) -> i32 {
+        let (mut count, mut max):(i32, i32) = (0, 0);
+        for (_, &value) in nums.iter().enumerate() {
+            if value == 1 {
+                count += 1;
+                if count > max {max = count;}
+            }else {count = 0;}
+        }
+        max
+}
+
+pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
+    fn reverse(nums: &mut Vec<i32>, mut l:i32, mut r:i32){
+        while l < r {
+            let temp = nums[l as usize];
+            nums[l as usize] = nums[r as usize];
+            nums[r as usize] = temp;
+            l += 1;
+            r -= 1;
+          }
+    }
+    k = k % (nums.len() as i32);
+    reverse(nums, 0, (nums.len() -1) as i32);
+    reverse(nums, 0, k-1);
+    reverse(nums, k, (nums.len() -1) as i32);
 }
