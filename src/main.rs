@@ -1,13 +1,15 @@
 use learn::greet;
+use learn::Numbers;
+use learn::Person;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::vec;
 
 fn main() {
-    let (mut bunnies, mut carrots) = (1, 2);
+    let (bunnies, _carrots) = (1, 2);
     const FOO_BAR: isize = 10;
     {
-        let mut bunnies = 12;
+        let bunnies = 12;
         println!("{}   {}", bunnies, FOO_BAR);
     }
     println!("{}    {}", bunnies, FOO_BAR);
@@ -32,11 +34,20 @@ fn main() {
         }
         println!();
     }
+
+    let person = Person::new();
+    person.log();
+    Person::log(&person);
+
+    let number = Numbers(12, 23);
+    println!("{}", number.lesser());
+    println!("{}", number.greater());
+    println!("{:#?}", number);
 }
 
 fn generate_all(d2: &mut Vec<Vec<i32>>, d1: &mut Vec<i32>, i: usize, arr: &Vec<i32>) {
     if i == arr.len() {
-        d2.push(d1);
+        d2.push(d1.to_vec());
         return;
     }
 
@@ -53,7 +64,7 @@ pub fn two_sum_two(nums: Vec<i32>, target: i32) -> Vec<i32> {
             s if s < target => left += 1,
             s if s > target => right -= 1,
             _ => {
-                left += 1;
+                left  += 1;
                 right += 1;
                 break;
             }
