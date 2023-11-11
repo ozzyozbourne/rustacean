@@ -64,7 +64,7 @@ pub fn two_sum_two(nums: Vec<i32>, target: i32) -> Vec<i32> {
             s if s < target => left += 1,
             s if s > target => right -= 1,
             _ => {
-                left  += 1;
+                left += 1;
                 right += 1;
                 break;
             }

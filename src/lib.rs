@@ -89,7 +89,7 @@ impl Numbers {
     pub fn lesser(&self) -> isize {
         if self.0 > self.1 {
             self.1
-       } else {
+        } else {
             self.0
         }
     }
